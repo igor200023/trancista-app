@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "942936226706",
+    "project_id": "trancistaapp",
+    "storage_bucket": "trancistaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942936226706:android:4629ea5b31e81140721f4b",
+        "android_client_info": {
+          "package_name": "com.trancistaapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv1-WRr6BRZrw3uHNP-GnkPEz6dW51WB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

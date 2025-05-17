@@ -1,0 +1,29 @@
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import LoginScreen from './screens/LoginScreen';
+import CadastroScreen from './screens/CadastroScreen';
+import TipoCabeloScreen from './screens/TipoCabeloScreen';
+import AgendamentoScreen from './screens/AgendamentoScreen';
+import ConfirmacaoScreen from './screens/ConfirmacaoScreen';
+import AdminAgendamentosScreen from './screens/AdminAgendamentosScreen';
+// import TesteFirebase from './screens/TesteFirebase'; // remova se não estiver mais usando
+
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
+        <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ title: 'Cadastro' }} />
+        <Stack.Screen name="TipoCabelo" component={TipoCabeloScreen} options={{ title: 'Tipo de Cabelo' }} />
+        <Stack.Screen name="Agendamento" component={AgendamentoScreen} options={{ title: 'Agendar Horário' }} />
+        <Stack.Screen name="Confirmacao" component={ConfirmacaoScreen} options={{ title: 'Confirmação' }} />
+        <Stack.Screen name="AdminAgendamentos" component={AdminAgendamentosScreen} options={{ title: 'Agendamentos (Admin)' }} />
+        {/* <Stack.Screen name="TesteFirebase" component={TesteFirebase} /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
