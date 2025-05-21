@@ -1,5 +1,15 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { 
+  View, 
+  Text, 
+  TouchableOpacity, 
+  StyleSheet, 
+  ScrollView,
+  Dimensions,
+  Alert
+} from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 export default function TipoCabeloScreen({ navigation }) {
   const opcoes = [
@@ -13,11 +23,39 @@ export default function TipoCabeloScreen({ navigation }) {
     navigation.navigate('Agendamento', { tipoCabelo: tipoSelecionado });
   };
 
+  const handleLogout = () => {
+    Alert.alert(
+      'Sair',
+      'Deseja realmente sair da sua conta?',
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel'
+        },
+        { 
+          text: 'Sair', 
+          onPress: () => navigation.replace('Login') 
+        }
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Tipo de Cabelo</Text>
+      <View style={styles.header}>
+        <Text style={styles.titulo}>Selecione seu tipo de cabelo</Text>
+        <TouchableOpacity 
+          style={styles.logoutButton}
+          onPress={handleLogout}
+        >
+          <Text style={styles.logoutText}>Sair</Text>
+        </TouchableOpacity>
+      </View>
 
-      <ScrollView contentContainerStyle={styles.opcoesContainer}>
+      <ScrollView 
+        contentContainerStyle={styles.opcoesContainer}
+        showsVerticalScrollIndicator={false}
+      >
         {opcoes.map((tipo) => (
           <TouchableOpacity
             key={tipo}
@@ -33,28 +71,54 @@ export default function TipoCabeloScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f5f5f5', paddingTop: 60, paddingHorizontal: 20 },
-  titulo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'left',
+  container: { 
+    flex: 1, 
+    backgroundColor: '#fff', 
+    paddingTop: 40, 
+    paddingHorizontal: width * 0.06 
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 20,
   },
+  titulo: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#FF2D6B',
+    flex: 1,
+  },
+  logoutButton: {
+    padding: 8,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#FF2D6B',
+  },
+  logoutText: {
+    color: '#FF2D6B',
+    fontSize: 12,
+    fontWeight: '600',
+  },
   opcoesContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingBottom: 20,
   },
   botao: {
-    backgroundColor: '#6200ee',
-    padding: 20,
-    marginVertical: 10,
+    backgroundColor: '#FF2D6B',
+    padding: 14,
+    marginVertical: 8,
     borderRadius: 10,
     width: '100%',
     alignItems: 'center',
+    shadowColor: '#FF2D6B',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 5,
   },
   textoBotao: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: '600',
+    fontSize: 14,
   },
 });

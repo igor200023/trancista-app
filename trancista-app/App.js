@@ -16,13 +16,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{ title: '' }} />
         <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ title: 'Cadastro' }} />
         <Stack.Screen name="TipoCabelo" component={TipoCabeloScreen} options={{ title: 'Tipo de Cabelo' }} />
         <Stack.Screen name="Agendamento" component={AgendamentoScreen} options={{ title: 'Agendar Horário' }} />
         <Stack.Screen name="Confirmacao" component={ConfirmacaoScreen} options={{ title: 'Confirmação' }} />
         <Stack.Screen name="AdminAgendamentos" component={AdminAgendamentosScreen} options={{ title: 'Agendamentos (Admin)' }} />
-        {/* <Stack.Screen name="TesteFirebase" component={TesteFirebase} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

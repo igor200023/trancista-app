@@ -1,8 +1,20 @@
-// CadastroScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  TouchableOpacity, 
+  Alert, 
+  StyleSheet,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView
+} from 'react-native';
 import { db } from '../firebaseConfig';
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+
+const { width } = Dimensions.get('window');
 
 export default function CadastroScreen({ navigation }) {
   const [nome, setNome] = useState('');
@@ -16,7 +28,6 @@ export default function CadastroScreen({ navigation }) {
     }
 
     try {
-      // Verifica se o email já está cadastrado
       const usuariosRef = collection(db, 'usuarios');
       const q = query(usuariosRef, where('email', '==', email));
       const querySnapshot = await getDocs(q);
@@ -26,13 +37,7 @@ export default function CadastroScreen({ navigation }) {
         return;
       }
 
-      // Adiciona o novo usuário
-      await addDoc(usuariosRef, {
-        nome,
-        email,
-        senha,
-      });
-
+      await addDoc(usuariosRef, { nome, email, senha });
       Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
       navigation.navigate('Login');
     } catch (error) {
@@ -42,91 +47,152 @@ export default function CadastroScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Criar Conta</Text>
-      <Text style={styles.subtitle}>Preencha os campos abaixo</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.logoPlaceholder}>
+          <Text style={styles.logoText}>LOGO</Text>
+        </View>
+        
+        <Text style={styles.title}>Criar Conta</Text>
+        <Text style={styles.subtitle}>Preencha os campos abaixo</Text>
 
-      <TextInput 
-        style={styles.input} 
-        placeholder="Nome completo" 
-        value={nome} 
-        onChangeText={setNome}
-        placeholderTextColor="#aaa"
-      />
-      <TextInput 
-        style={styles.input} 
-        placeholder="Email" 
-        value={email} 
-        onChangeText={setEmail} 
-        keyboardType="email-address"
-        placeholderTextColor="#aaa"
-      />
-      <TextInput 
-        style={styles.input} 
-        placeholder="Senha" 
-        value={senha} 
-        onChangeText={setSenha} 
-        secureTextEntry
-        placeholderTextColor="#aaa"
-      />
+        <View style={styles.inputContainer}>
+          <TextInput 
+            style={styles.input} 
+            placeholder="Nome completo" 
+            value={nome} 
+            onChangeText={setNome}
+            placeholderTextColor="#999"
+          />
+        </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleCadastro}>
-        <Text style={styles.buttonText}>Cadastrar</Text>
-      </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <TextInput 
+            style={styles.input} 
+            placeholder="Email" 
+            value={email} 
+            onChangeText={setEmail} 
+            keyboardType="email-address"
+            placeholderTextColor="#999"
+          />
+        </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.linkText}>Já tem uma conta? Entrar</Text>
-      </TouchableOpacity>
-    </View>
+        <View style={styles.inputContainer}>
+          <TextInput 
+            style={styles.input} 
+            placeholder="Senha" 
+            value={senha} 
+            onChangeText={setSenha} 
+            secureTextEntry
+            placeholderTextColor="#999"
+          />
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={handleCadastro}>
+          <Text style={styles.buttonText}>Cadastrar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.secondaryButton} 
+          onPress={() => navigation.navigate('Login')}
+        >
+          <Text style={styles.secondaryButtonText}>Já tem uma conta? Entrar</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-    padding: 20,
+    paddingHorizontal: width * 0.08,
+    paddingVertical: 20,
+  },
+  logoPlaceholder: {
+    width: 80,
+    height: 80,
+    marginBottom: 20,
+    backgroundColor: '#FFE4ED',
+    borderRadius: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logoText: {
+    color: '#FF2D6B',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
   title: {
-    fontSize: 28,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#6200ee',
-    marginBottom: 5,
+    color: '#FF2D6B',
+    marginBottom: 4,
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
-    color: '#777',
+    fontSize: 12,
+    color: '#888',
     marginBottom: 20,
+    textAlign: 'center',
+  },
+  inputContainer: {
+    width: '100%',
+    marginBottom: 12,
+    shadowColor: '#FF2D6B',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 2,
   },
   input: {
     width: '100%',
     backgroundColor: '#fff',
-    padding: 15,
-    marginVertical: 10,
-    borderRadius: 8,
+    padding: 12,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
-    fontSize: 16,
+    borderColor: '#FFE4ED',
+    fontSize: 14,
+    color: '#333',
   },
   button: {
     width: '100%',
-    backgroundColor: '#6200ee',
-    padding: 15,
-    borderRadius: 8,
+    backgroundColor: '#FF2D6B',
+    padding: 12,
+    borderRadius: 10,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 8,
+    shadowColor: '#FF2D6B',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 4,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '600',
   },
-  linkText: {
-    color: '#6200ee',
-    fontSize: 16,
-    marginTop: 15,
-    fontWeight: 'bold',
+  secondaryButton: {
+    marginTop: 16,
+    padding: 8,
+  },
+  secondaryButtonText: {
+    color: '#FF2D6B',
+    fontSize: 12,
+    fontWeight: '600',
+    textDecorationLine: 'underline',
   },
 });

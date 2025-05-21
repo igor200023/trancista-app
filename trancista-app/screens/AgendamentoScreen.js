@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, Vibration, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { 
+  View, 
+  Text, 
+  Alert, 
+  Vibration, 
+  StyleSheet, 
+  TouchableOpacity, 
+  FlatList,
+  Dimensions,
+  ScrollView
+} from 'react-native';
 import { db } from '../firebaseConfig';
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const { width } = Dimensions.get('window');
 
-export default function AgendamentoScreen() {
+export default function AgendamentoScreen({ navigation }) {
   const [diaSelecionado, setDiaSelecionado] = useState(null);
   const [horarioSelecionado, setHorarioSelecionado] = useState(null);
   const [tipoCabelo, setTipoCabelo] = useState('');
@@ -73,15 +84,26 @@ export default function AgendamentoScreen() {
     agendamentos.some(a => a.hora === hora);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.tipoCabeloText}>Agendamento para: {tipoCabelo}</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.tipoCabeloText}>Agendamento para: {tipoCabelo}</Text>
+        <TouchableOpacity 
+          style={styles.logoutButton}
+          onPress={() => navigation.replace('Login')}
+        >
+          <Text style={styles.logoutText}>Sair</Text>
+        </TouchableOpacity>
+      </View>
 
       <Text style={styles.title}>Escolha um dia:</Text>
-      <View style={styles.grid}>
+      <View style={styles.diasContainer}>
         {diasDisponiveis.map((dia) => (
           <TouchableOpacity
             key={dia}
-            style={[styles.botao, diaSelecionado === dia && styles.botaoSelecionado]}
+            style={[
+              styles.botaoDia, 
+              diaSelecionado === dia && styles.botaoSelecionado
+            ]}
             onPress={() => handleSelecionarDia(dia)}
           >
             <Text style={styles.textoBotao}>{dia}</Text>
@@ -92,49 +114,128 @@ export default function AgendamentoScreen() {
       {diaSelecionado && (
         <>
           <Text style={styles.title}>Horários para {diaSelecionado}:</Text>
-          <FlatList
-            data={horariosDisponiveis}
-            keyExtractor={(item) => item}
-            numColumns={3}
-            columnWrapperStyle={styles.row}
-            renderItem={({ item }) => {
-              if (isHorarioOcupado(item)) return null;
+          <View style={styles.horariosContainer}>
+            {horariosDisponiveis.map((horario) => {
+              if (isHorarioOcupado(horario)) return null;
 
               return (
                 <TouchableOpacity
-                  style={[styles.botao, horarioSelecionado === item && styles.botaoSelecionado]}
-                  onPress={() => handleAgendar(item)}
+                  key={horario}
+                  style={[
+                    styles.botaoHorario,
+                    horarioSelecionado === horario && styles.botaoSelecionado
+                  ]}
+                  onPress={() => handleAgendar(horario)}
                 >
-                  <Text style={styles.textoBotao}>{item}</Text>
+                  <Text style={styles.textoBotao}>{horario}</Text>
                 </TouchableOpacity>
               );
-            }}
-          />
+            })}
+          </View>
         </>
       )}
 
       {horarioSelecionado && (
-        <Text style={styles.confirmado}>Agendado: {diaSelecionado} às {horarioSelecionado}</Text>
+        <View style={styles.confirmacaoContainer}>
+          <Text style={styles.confirmado}>
+            Agendado: {diaSelecionado} às {horarioSelecionado}
+          </Text>
+        </View>
       )}
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'flex-start', alignItems: 'center', padding: 20, backgroundColor: '#f5f5f5' },
-  tipoCabeloText: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
-  title: { fontSize: 20, fontWeight: 'bold', marginVertical: 10 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' },
-  row: { justifyContent: 'space-around', marginBottom: 10 },
-  botao: {
-    backgroundColor: '#6200ee',
-    padding: 20,
-    margin: 10,
+  container: {
+    flexGrow: 1,
+    padding: width * 0.05,
+    backgroundColor: '#fff',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  tipoCabeloText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FF2D6B',
+  },
+  logoutButton: {
+    padding: 8,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#FF2D6B',
+  },
+  logoutText: {
+    color: '#FF2D6B',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FF2D6B',
+    marginVertical: 10,
+    alignSelf: 'flex-start',
+  },
+  diasContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 20,
+  },
+  horariosContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  botaoDia: {
+    backgroundColor: '#FFE4ED',
+    padding: 12,
+    marginVertical: 5,
     borderRadius: 10,
-    width: 100,
+    width: width * 0.28,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  botaoHorario: {
+    backgroundColor: '#FFE4ED',
+    padding: 12,
+    marginVertical: 5,
+    borderRadius: 10,
+    width: width * 0.28,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  botaoSelecionado: {
+    backgroundColor: '#FF2D6B',
+    shadowColor: '#FF2D6B',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 5,
+  },
+  textoBotao: {
+    color: '#333',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  confirmacaoContainer: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: '#E8F5E9',
+    borderRadius: 10,
+    width: '100%',
     alignItems: 'center',
   },
-  botaoSelecionado: { backgroundColor: '#3700b3' },
-  textoBotao: { color: 'white', fontWeight: 'bold' },
-  confirmado: { marginTop: 20, fontSize: 16, color: 'green' },
+  confirmado: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#2E7D32',
+  },
 });
