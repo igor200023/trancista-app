@@ -14,6 +14,10 @@ export default function AgendamentoScreen({ navigation }) {
   const diasDisponiveis = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
   const horariosDisponiveis = ["08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"];
 
+<<<<<<< HEAD
+=======
+  // Adiciona os botões no header
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -40,7 +44,11 @@ export default function AgendamentoScreen({ navigation }) {
   useEffect(() => {
     const carregarDados = async () => {
       try {
+<<<<<<< HEAD
 
+=======
+        // Carrega os dados do usuário primeiro
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
         const usuarioData = await AsyncStorage.getItem('usuario');
         if (usuarioData) {
           setUsuario(JSON.parse(usuarioData));
@@ -88,9 +96,15 @@ export default function AgendamentoScreen({ navigation }) {
         dia: diaSelecionado,
         hora: horario,
         tipo: tipoCabelo,
+<<<<<<< HEAD
         nome: usuario.nome,
         email: usuario.email || '',
         userId: usuario.id || '',
+=======
+        nome: usuario.nome, // Garante que vai pegar o nome do usuário
+        email: usuario.email || '',
+        userId: usuario.id || '', // Adiciona o ID do usuário
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
         timestamp: new Date(),
       };
 
@@ -169,7 +183,11 @@ const styles = StyleSheet.create({
   botao: {
     backgroundColor: '#6200ee',
     padding: 20,
+<<<<<<< HEAD
     margin: 7,
+=======
+    margin: 10,
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
     borderRadius: 10,
     width: 100,
     alignItems: 'center',

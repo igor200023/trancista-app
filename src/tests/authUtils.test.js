@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// src/tests/authUtils.test.js
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
 import { hashPassword, comparePassword } from '../utils/authUtils.js';
 
 describe('Teste de Criptografia de Senha', () => {

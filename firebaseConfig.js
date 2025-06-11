@@ -13,6 +13,10 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+<<<<<<< HEAD
 const db = getFirestore(app);
+=======
+const db = getFirestore(app); // <--- Firestore corretamente inicializado
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
 
 export { db };

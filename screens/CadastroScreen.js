@@ -25,7 +25,11 @@ export default function CadastroScreen({ navigation }) {
     setLoading(true);
 
     try {
+<<<<<<< HEAD
 
+=======
+      // Verifica se o email já existe
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
       const usuariosRef = collection(db, 'usuarios');
       const q = query(usuariosRef, where('email', '==', email));
       const querySnapshot = await getDocs(q);
@@ -36,8 +40,15 @@ export default function CadastroScreen({ navigation }) {
         return;
       }
 
+<<<<<<< HEAD
       const senhaCriptografada = CryptoJS.SHA256(senha).toString();
 
+=======
+      // Criptografa a senha com SHA-256
+      const senhaCriptografada = CryptoJS.SHA256(senha).toString();
+
+      // Salva novo usuário no Firestore
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
       const docRef = await addDoc(usuariosRef, {
         nome,
         email,
@@ -45,11 +56,19 @@ export default function CadastroScreen({ navigation }) {
         dataCadastro: new Date()
       });
 
+<<<<<<< HEAD
+=======
+      // Salva os dados do usuário no AsyncStorage
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
       await AsyncStorage.setItem('usuario', JSON.stringify({
         id: docRef.id,
         nome,
         email,
+<<<<<<< HEAD
 
+=======
+        // Não salvamos a senha no AsyncStorage por segurança
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
       }));
 
       Alert.alert('Sucesso', 'Cadastro realizado com sucesso!', [

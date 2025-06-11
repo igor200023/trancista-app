@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// screens/TesteFirebase.js
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { db } from '../firebaseConfig';

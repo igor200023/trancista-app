@@ -27,7 +27,11 @@ export default function AdminAgendamentosScreen({ navigation }) {
           dataFormatada: data.timestamp?.toDate().toLocaleString('pt-BR') || 'Data não disponível',
         });
       });
+<<<<<<< HEAD
 
+=======
+      // Ordena por data mais recente primeiro
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
       dados.sort((a, b) => new Date(b.timestamp?.toDate()) - new Date(a.timestamp?.toDate()));
       setAgendamentos(dados);
     } catch (error) {
@@ -83,7 +87,11 @@ export default function AdminAgendamentosScreen({ navigation }) {
       await updateDoc(doc(db, 'agendamentos', agendamentoEditando.id), {
         dia: novoDia,
         hora: novaHora,
+<<<<<<< HEAD
         timestamp: new Date()
+=======
+        timestamp: new Date() // Atualiza a data de modificação
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
       });
       
       setModalVisible(false);

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
+=======
+// App.js
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+<<<<<<< HEAD
+=======
+// Telas
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
 import LoginScreen from './screens/LoginScreen';
 import CadastroScreen from './screens/CadastroScreen';
 import TipoCabeloScreen from './screens/TipoCabeloScreen';
@@ -10,6 +18,10 @@ import ConfirmacaoScreen from './screens/ConfirmacaoScreen';
 import AdminAgendamentosScreen from './screens/AdminAgendamentosScreen';
 import TesteFirebase from './screens/TesteFirebase';
 
+<<<<<<< HEAD
+=======
+// Firebase (isso importa e garante que está inicializado)
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
 import './firebaseConfig';
 
 const Stack = createStackNavigator();

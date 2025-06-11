@@ -13,6 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+<<<<<<< HEAD
       "supportsTablet": true,
       "bundleIdentifier": "com.trancistaapp",
       "buildNumber": "1.0.0"
@@ -35,6 +36,18 @@
       "eas": {
         "projectId": "77951316-6f8c-4fd2-9ade-ca740f924296"
       }
+=======
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
     }
   }
 }

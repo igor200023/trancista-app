@@ -18,6 +18,10 @@ export default function LoginScreen({ navigation }) {
 
     setLoading(true);
 
+<<<<<<< HEAD
+=======
+    // Login do admin (se necessário)
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
     if (email === 'admintrancista@gmail.com' && senha === '12345') {
       await AsyncStorage.setItem('usuario', JSON.stringify({
         nome: 'Administrador',
@@ -40,7 +44,11 @@ export default function LoginScreen({ navigation }) {
         const senhaCriptografada = CryptoJS.SHA256(senha).toString();
 
         if (usuario.senha === senhaCriptografada) {
+<<<<<<< HEAD
   
+=======
+          // Salva os dados do usuário no AsyncStorage
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
           await AsyncStorage.setItem('usuario', JSON.stringify({
             id: doc.id,
             nome: usuario.nome,

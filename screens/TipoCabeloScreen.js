@@ -10,6 +10,10 @@ export default function TipoCabeloScreen({ navigation }) {
     'Cabelo curto',
   ];
 
+<<<<<<< HEAD
+=======
+  // Configura os botões no header
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -22,7 +26,11 @@ export default function TipoCabeloScreen({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
+<<<<<<< HEAD
               AsyncStorage.clear();
+=======
+              AsyncStorage.clear(); // Limpa dados de sessão (opcional)
+>>>>>>> 97495f08f5c83e473765cfe465952c990d66a7ee
               navigation.replace('Login');
             }}
           >
